@@ -22,6 +22,45 @@ private:
 	int num;				// numerator;
 	int denom;				// denominator;
 public:
-	Fraction(int n, int d) : num(n), denum(d) { };
-	void print() { cout << num << "/" << denom; };
+	Fraction(int n, int d) : num(n), denom(d) { };
+	void print() { cout << num << "/" << denom << endl; };
+	Fraction add(Fraction, int); //overloaded addition operator
+	Fraction add(int, Fraction);
+	friend bool operator>(Fraction LHS, Fraction RHS);
 };
+
+bool operator>(Fraction LHS, Fraction RHS)
+{
+	if ((LHS.num*RHS.denom) > (RHS.num*LHS.denom)) return 1;
+	else return 0;
+}
+
+Fraction Fraction::add(Fraction arg1, int arg2)
+{
+	Fraction result(0,1);
+	result.num = arg1.num + arg2*arg1.denom;
+	result.denom = arg1.denom;
+	return result;
+}
+
+Fraction Fraction::add(int arg1, Fraction arg2)
+{
+	Fraction result(0, 1);
+	result.num = arg2.num + arg1*arg2.denom;
+	result.denom = arg2.denom;
+	return result;
+}
+
+int main()
+{
+	Fraction testFraction1(2, 3);
+	Fraction testFraction2(2, 3);
+	int testint1 = 3;
+
+	testFraction1 = testFraction1.add(testFraction1, testint1);
+	testFraction1.print();
+
+	testFraction2 = testFraction2.add(testint1, testFraction2);
+	testFraction2.print();
+
+}
